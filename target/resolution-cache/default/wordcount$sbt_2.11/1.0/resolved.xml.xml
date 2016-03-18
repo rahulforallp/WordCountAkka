@@ -4,7 +4,7 @@
 		module="wordcount$sbt_2.11"
 		revision="1.0"
 		status="integration"
-		publication="20160318141541"
+		publication="20160318174800"
 	/>
 	<configurations>
 		<conf name="default" visibility="public"/>

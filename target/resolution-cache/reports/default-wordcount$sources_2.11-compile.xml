@@ -7,8 +7,23 @@
 		revision="1.0"
 		conf="compile"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
-		date="20160318141543"/>
+		date="20160318174801"/>
 	<dependencies>
+		<module organisation="com.typesafe.akka" name="akka-testkit_2.11">
+			<revision name="2.3.14" status="release" pubdate="20150917074301" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://akka.io/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="3">
+				<license name="Apache License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="2916" time="0" location="/home/knoldus/.ivy2/cache/com.typesafe.akka/akka-testkit_2.11/ivy-2.3.14.xml" searched="false" origin-is-local="false" origin-location="https://jcenter.bintray.com/com/typesafe/akka/akka-testkit_2.11/2.3.14/akka-testkit_2.11-2.3.14.pom"/>
+				<caller organisation="default" name="wordcount$sources_2.11" conf="compile" rev="2.3.14" rev-constraint-default="2.3.14" rev-constraint-dynamic="2.3.14" callerrev="1.0"/>
+				<artifacts>
+					<artifact name="akka-testkit_2.11" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="31404" time="0" location="/home/knoldus/.ivy2/cache/com.typesafe.akka/akka-testkit_2.11/srcs/akka-testkit_2.11-2.3.14-sources.jar">
+						<origin-location is-local="false" location="https://jcenter.bintray.com/com/typesafe/akka/akka-testkit_2.11/2.3.14/akka-testkit_2.11-2.3.14-sources.jar"/>
+					</artifact>
+					<artifact name="akka-testkit_2.11" type="jar" ext="jar" status="no" details="" size="253023" time="0" location="/home/knoldus/.ivy2/cache/com.typesafe.akka/akka-testkit_2.11/jars/akka-testkit_2.11-2.3.14.jar">
+						<origin-location is-local="false" location="https://jcenter.bintray.com/com/typesafe/akka/akka-testkit_2.11/2.3.14/akka-testkit_2.11-2.3.14.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
 		<module organisation="com.typesafe.akka" name="akka-actor_2.11">
 			<revision name="2.4.1" status="release" pubdate="20151127172056" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://akka.io/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="1">
 				<license name="Apache License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>

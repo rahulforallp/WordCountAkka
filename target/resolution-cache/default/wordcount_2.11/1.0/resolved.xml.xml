@@ -4,7 +4,7 @@
 		module="wordcount_2.11"
 		revision="1.0"
 		status="integration"
-		publication="20160318141541"
+		publication="20160318174630"
 	>
 		<description>
 		wordcount
@@ -35,5 +35,7 @@
 		<dependency org="org.scala-lang" name="scala-compiler" rev="2.11.8" conf="scala-tool->default,optional(default)"/>
 		<dependency org="org.scala-lang" name="scala-library" rev="2.11.8" conf="scala-tool->default,optional(default);compile->default(compile)"/>
 		<dependency org="com.typesafe.akka" name="akka-actor_2.11" rev="2.4.1" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.akka" name="akka-testkit_2.11" rev="2.3.14" conf="compile->default(compile)"/>
+		<dependency org="org.scalatest" name="scalatest_2.10" rev="2.0" conf="test->default(compile)"/>
 	</dependencies>
 </ivy-module>
