@@ -1,59 +1,69 @@
 
 import java.io.File
+
 import akka.actor.{Actor, ActorSystem, Props}
-import akka.pattern.ask
-import akka.routing.{Router, RoundRobinRoutingLogic, ActorRefRoutee}
+import akka.routing.{ActorRefRoutee, RoundRobinRoutingLogic, Router}
 import akka.util.Timeout
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ Await}
 import scala.concurrent.duration._
 import scala.io.Source
 
-object Factory{
-  val system = ActorSystem("Start")
-  val word = system.actorOf(Props[Words], "Word")
-  val counter = system.actorOf(Props[Counter], "Counter")
-}
 
-class Words extends Actor {
-  implicit val timeout = Timeout(5.seconds)
+class Aggregate extends Actor {
 
-  def count(file: File): Map[String, Int] = {
-    val wordlist = Source.fromFile(file).mkString.split("\\W+").toList
-    val wordmap = wordlist.groupBy(a => a)
-    val x = wordmap.map { case (k, v) => (k, v.length) }
-    x
-  }
-
-  def receive ={
-    case file:String => {
-      println(count(new File(file))+file)
+  def receive = {
+    case countMap: Map[String, Int] => {
+      println(countMap)
     }
   }
 }
 
-class   Counter extends Actor {
-  implicit val timeout = Timeout(10.seconds)
+class Counter extends Actor {
 
+  def receive = {
+    case file: String => {
+      //println(count(new File(file))+file)
+      Factory.system.scheduler.scheduleOnce(50 second) {
+        Factory.aggregate ! count(new File(file))
+      }
+    }
+  }
+
+  def count(file: File): Map[String, Int] = {
+    val wordList = Source.fromFile(file).mkString.split("\\W+").toList
+    val wordMap = wordList.groupBy(a => a)
+    val x = wordMap.map { case (k, v) => (k, v.length) }
+    x
+  }
+}
+
+class Words extends Actor {
+
+  implicit val timeout = Timeout(50.seconds)
   var router = {
     val routees = Vector.fill(3) {
-      val r = context.actorOf(Props[Words])
+      val r = context.actorOf(Props[Counter])
       context watch r
       ActorRefRoutee(r)
     }
     Router(RoundRobinRoutingLogic(), routees)
   }
 
-  def receive= {
-    case file:String => {
-      val result =router.route(file, sender())
-
-    }
+  def receive = {
+    case file: String => router.route(file, sender())
   }
 }
 
+object Factory {
+  val system = ActorSystem("Start")
+  val word = system.actorOf(Props[Words], "Word")
+  val counter = system.actorOf(Props[Counter], "Counter")
+  val aggregate = system.actorOf(Props[Aggregate], "Aggregate")
+}
+
 object Start extends App {
-  Factory.counter ! "/home/knoldus/Music/b/one"
-  Factory.counter ! "/home/knoldus/Music/b/two"
-  Factory.counter ! "/home/knoldus/Music/b/three"
+  Factory.word ! "/home/knoldus/Music/b/one"
+  Factory.word ! "/home/knoldus/Music/b/two"
+  Factory.word ! "/home/knoldus/Music/b/three"
+  Factory.system.terminate()
 }
