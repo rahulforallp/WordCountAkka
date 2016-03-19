@@ -20,9 +20,9 @@
 //    TestKit.shutdownActorSystem(system)
 //  }
 //
-//  "An Echo actor" must {
+//  "An Counter actor" must {
 //
-//    "send back messages unchanged" in {
+//    "send back message" in {
 //      val echo = system.actorOf(TestActors.echoActorProps)
 //      echo ! "/home/knoldus/Music/b/one"
 //      expectMsg("Map(well -> 1, hi -> 1, hello -> 1, good -> 1)")
